@@ -2,22 +2,23 @@ body {
     font-family: sans-serif;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px;
-}
-
-.saldo, .transacoes, .acoes {
+.saldo-container, .acoes-container {
     margin-bottom: 20px;
 }
 
-.historico-lista {
-    list-style: none;
-    padding: 0;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.historico-lista li {
-    margin-bottom: 10px;
+th,td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.transacoes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 20px;
 }
