@@ -2,7 +2,13 @@ body {
     font-family: sans-serif;
 }
 
-.saldo-container, .acoes-container {
+.barra-felicidade {
+    margin-bottom: 20px;
+}
+
+.saldo-container,
+.acoes-container,
+.transacoes-container {
     margin-bottom: 20px;
 }
 
@@ -11,14 +17,8 @@ table {
     border-collapse: collapse;
 }
 
-th,td {
+th,
+td {
     padding: 8px;
     border: 1px solid #ddd;
-}
-
-.transacoes-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-top: 20px;
 }
