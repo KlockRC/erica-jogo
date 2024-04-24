@@ -1,11 +1,17 @@
 let saldo = 0;
+let barraFelicidade = 1;
+
+function atualizarBarraFelicidade() {
+    barraFelicidade = parseFloat(document.getElementById('barra-felicidade').value);
+    document.getElementById('valor-barra-felicidade').textContent = barraFelicidade.toFixed(2);
+}
 
 function adicionarValor() {
     const valorAdicionar = parseFloat(document.getElementById('valor-adicionar').value);
     if (valorAdicionar > 0) {
-        saldo += valorAdicionar;
+        saldo += valorAdicionar * barraFelicidade;
         atualizarSaldo();
-        adicionarTransacao('Adição', valorAdicionar);
+        adicionarTransacao('Adição', valorAdicionar * barraFelicidade);
     }
 }
 
