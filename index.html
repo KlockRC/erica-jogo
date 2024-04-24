@@ -9,6 +9,12 @@
 <body>
     <h1>Minha Carteira Digital</h1>
 
+    <div class="barra-felicidade">
+        <h2>Barra de Felicidade:</h2>
+        <input type="range" id="barra-felicidade" min="0" max="1.25" step="0.01" value="1" onchange="atualizarBarraFelicidade()">
+        <span id="valor-barra-felicidade">1,00</span>
+    </div>
+
     <div class="saldo-container">
         <h2>Saldo: R$ <span id="saldo">0,00</span></h2>
     </div>
@@ -23,7 +29,7 @@
         </div>
     </div>
 
-    <div class="transacoes-container,ds">
+    <div class="transacoes-container">
         <h2>Transações:</h2>
         <table id="transacoes-tabela">
             <thead>
@@ -34,10 +40,9 @@
                 </tr>
             </thead>
             <tbody>
-                </tbody>
+            </tbody>
         </table>
     </div>
-
 
     <script src="script.js"></script>
 </body>
