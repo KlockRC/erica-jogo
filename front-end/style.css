@@ -1,0 +1,34 @@
+body {
+    font-family: sans-serif;
+}
+
+select {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+  
+.usuarios-container,
+
+.barra-felicidade {
+    margin-bottom: 20px;
+}
+
+.saldo-container,
+.acoes-container,
+.transacoes-container {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
