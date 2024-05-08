@@ -2,6 +2,16 @@ body {
     font-family: sans-serif;
 }
 
+select {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+  
+.usuarios-container,
+
 .barra-felicidade {
     margin-bottom: 20px;
 }
