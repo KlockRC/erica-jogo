@@ -2,10 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser'); // Import body-parser
 const mongoose = require('mongoose');
 const app = express();
-const port = process.env.PORT || 3000; // Defina a porta do servidor
+const port = 3000; // Defina a porta do servidor
 
 // Conexão ao MongoDB
-mongoose.connect('mongodb://172.29.49.52:27017/contas');
+mongoose.connect(`mongodb://${process.env.MONGO_IP}:27017/contas`);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Erro de conexão com o MongoDB:'));
 db.once('open', () => console.log('Conectado ao MongoDB!'));
