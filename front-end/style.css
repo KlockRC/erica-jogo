@@ -1,0 +1,97 @@
+body {
+    font-family: sans-serif;
+    background-color: #1c1a1a;
+    color: white;
+}
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+
+select {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+  .divtesen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .usrtag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .usuarios-acoes {
+    padding: 20px;
+  }
+
+.barra-felicidade {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.barra-felicidade > h2 {
+    padding-right: 30px;
+}
+.saldo-container {
+    display: flex;
+    justify-content: center;
+}
+.botao {
+    border-radius: 50px;
+    border-color: #ffffff;
+    border: 2px solid #ffffff;
+    width: 220px;
+    height: 20px;
+    margin-left: 10px;
+    color: #ffff;
+    background-color: #1c1a1a;
+}
+
+.input {
+    border-radius: 50px;
+    border-color: #ffffff;
+    border: 2px solid #ffffff;
+    width: 220px;
+    height: 20px;
+    margin-left: 10px;
+    color: #ffff;
+    background-color: #1c1a1a;
+}
+.barra-felicidade > input {
+    width: 200px;
+    height: 20px;
+    border-radius: 50px;
+    margin-top: 5px;
+    border: 2px solid #ffa500;
+    color: #fff
+    background-color:#1c1a1a
+  }
+  .acoes {
+    display:flex ;
+    align-items: center;
+    justify-content: center;    
+  }
+
+.saldo-container,
+.acoes-container,
+.transacoes-container {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
