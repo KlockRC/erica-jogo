@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  database:
+    image: mongo:latest
+    restart: unless-stopped
+
+  back-end:
+    image: noname120hz/api-back-end:1.0.0
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    environment:
+      MONGO_IP: database
+
+  front-end:
+    image: noname120hz/api-front-end:1.0.0
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - back-end
+
