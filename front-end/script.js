@@ -12,6 +12,7 @@ function carregarUsuario() {
     carregarBarraFelicidade();
     carregarSaldo();
     carregarTransacao();
+    atualizarMenuSuspensoTransacoes();
 }
 
 async function carregarMenuSuspenso() {
@@ -19,14 +20,23 @@ async function carregarMenuSuspenso() {
         metodo: "GET",
         url: `${backUrl}/usuarios`
     });
-    const selectElement = document.getElementById('usuarios-lista');
-    selectElement.innerHTML = ''; // Limpa as opções existentes
+
+    const selectElement = [
+        document.getElementById('usuarios-lista'),
+        document.getElementById('usuarios-transferir')
+    ];
+    
+    selectElement[0].innerHTML = ''; // Limpa as opções existentes
   
     objetos.forEach(objeto => {
-      const option = document.createElement('option');
-      option.value = objeto._id;
-      option.textContent = objeto.nome;
-      selectElement.appendChild(option);
+      selectElement.forEach(menu => {
+        if(!(objeto === objetos[0] && menu === selectElement[1])) {
+            const option = document.createElement('option');
+            option.value = objeto._id;
+            option.textContent = objeto.nome;
+            menu.appendChild(option);
+        };
+      });
     });
 }
 
@@ -47,6 +57,7 @@ async function carregarBarraFelicidade() {
         
         barraFelicidade = objetoBanco.barraFelicidade;
         document.getElementById('valor-barra-felicidade').textContent = barraFelicidade.toFixed(2);
+        document.getElementById('barra-felicidade').value = barraFelicidade;
     }
 }
 
@@ -121,6 +132,8 @@ async function deletarUsuario() {
         metodo: "DELETE",
         url: `${backUrl}/usuarios/delete/${optionValue}`});
       selectElement.remove(selectElement.selectedIndex); // Remove a opção selecionada
+      carregarUsuario();
+      atualizarMenuSuspensoTransacoes();
     }
 }
 
@@ -135,6 +148,30 @@ async function criarUsuario() {
     carregarMenuSuspenso();
     document.getElementById('criar-usuario').value = '';
     document.getElementById('ocupacao').value = '';
+}
+
+function atualizarMenuSuspensoTransacoes() {
+    const selectElement = [
+        document.getElementById('usuarios-lista'),
+        document.getElementById('usuarios-transferir')
+    ];
+    const selectElementOptions = selectElement[0].options;
+    const selectedOption = selectElement[0].options[selectElement[0].selectedIndex];
+    selectElement[1].innerHTML = ''; // Limpa as opções existentes
+
+    // Adiciona a opção default
+    const optionDefault = document.createElement('option');
+    optionDefault.textContent = 'Transferir para ...';
+    selectElement[1].appendChild(optionDefault);
+
+    //Adiciona todos os usuários exceto o atual selecionado
+    for (let i = 0; i < selectElementOptions.length; i++) {
+        if(selectElementOptions[i] === selectedOption) continue;
+        const newOption = document.createElement('option');
+        newOption.value = selectElementOptions[i].value;
+        newOption.textContent = selectElementOptions[i].textContent;
+        selectElement[1].appendChild(newOption);
+    }
 }
 
 async function atualizarBarraFelicidade() {
@@ -172,19 +209,69 @@ function debitarValor() {
     document.getElementById('valor-debitar').value = '';
 }
 
-async function atualizarSaldo() {
+function transferirValor() {
+    const selectElement = document.getElementById('usuarios-transferir');
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const valorTransferir = parseFloat(document.getElementById('valor-transferir').value);
+
+    if(!(selectedOption && valorTransferir)) return;
+
+    if (valorTransferir > 0 && valorTransferir <= saldo) {
+        if(selectedOption.value) {
+            saldo -= valorTransferir;
+            atualizarSaldo(valorTransferir);
+            adicionarTransacao(`Transferencia realizada para ${selectedOption.textContent}`, -valorTransferir);
+        }
+    }
+    document.getElementById('valor-transferir').value = '';
+}
+
+async function atualizarSaldo(transferir = null) {
     const saldoFormatado = formatarSaldo(saldo);
     document.getElementById('saldo').textContent = saldoFormatado;
     const selectElement = document.getElementById('usuarios-lista');
     const selectedOption = selectElement.options[selectElement.selectedIndex];
-    if (selectedOption) {
-        const selectedOptionValue = selectedOption.value; // Pega o valor da opção selecionada
+    if (!selectedOption) return;
+    const selectedOptionValue = selectedOption.value; // Pega o valor da opção selecionada
+    
+    if(transferir !== null) {
+        const userToTranfer = document.getElementById('usuarios-transferir');
+        const userToTranferSelectedOption = userToTranfer.options[userToTranfer.selectedIndex];
+        const userToTranferValue = userToTranferSelectedOption.value;
+        const objetosBanco = await callBack({
+            metodo: "GET",
+            url: `${backUrl}/usuarios`
+        })
+
+        const objetoBanco = objetosBanco.find(
+            (obj) => obj._id === userToTranferValue
+        );
+
+        const objetoBancoSaldo = objetoBanco.saldo + transferir;
+        const historicoTransacao = objetoBanco.historicoTransacao;
+        const data = new Date().toLocaleDateString();
+        const descricao = `Transferencia recebida de ${selectedOption.textContent}`;
+        historicoTransacao.push({ data, descricao, valor: transferir });
+
+        await callBack({
+            metodo: "PATCH",
+            url: `${backUrl}/usuarios/patch/${userToTranferValue}`,
+            data: { historicoTransacao, saldo: objetoBancoSaldo }
+        })
+
         await callBack({
             metodo: "PATCH",
             url: `${backUrl}/usuarios/patch/${selectedOptionValue}`,
             data: { saldo }
         })
+        return;
     }
+
+    await callBack({
+        metodo: "PATCH",
+        url: `${backUrl}/usuarios/patch/${selectedOptionValue}`,
+        data: { saldo }
+    })
 }
 
 async function adicionarTransacao(descricao, valor) {
@@ -263,13 +350,4 @@ async function start() {
     carregarBarraFelicidade();
     carregarSaldo();
     carregarTransacao();
-
-    
-    console.log(callBack({
-        metodo: "GET",
-        url: `${backUrl}/usuarios`
-    }));  
-    
 }
-
-start();
