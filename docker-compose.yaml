@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
 
   back-end:
-    image: noname120hz/api-back-end:1.0.0
+    image: noname120hz/api-back-end:1.1.0
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -16,7 +16,7 @@ services:
       MONGO_IP: database
 
   front-end:
-    image: noname120hz/api-front-end:1.0.0
+    image: noname120hz/api-front-end:1.1.0
     restart: unless-stopped
     ports:
       - "8080:80"
