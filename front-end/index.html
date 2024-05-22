@@ -7,17 +7,16 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body onload="start()">
-        <h1>Carteira Digital Metal Inc.</h1>
-        <div class="usrtag">
-            <h2>Usuários Opções:</h2>
-        </div>
-
-        <button class="botao" onclick="window.location=chamarLogs('logs.html')">Logs</button>
+        <header>
+            <div class="header">
+                <img  class="logo" src="src/carteiraM.png" width="50" height="50"/>
+                <h2 class="titi">Carteira Digital Metal Inc.</h2>
+                <h2 class="saldo">Saldo: M$ <span id="saldo">0,00</span></h2>
+                <select class="inputh" id="usuarios-lista" onchange="carregarUsuario()"></select>
+                <button class="botaoh" onclick="deletarUsuario()">Deletar Usuário Selecionado</button>
+            </div>
+        </header>
         
-        <div class="divtesen">
-            <select class="input" id="usuarios-lista" onchange="carregarUsuario()"></select>
-            <button class="botao" onclick="deletarUsuario()">Deletar Usuário Selecionado</button>
-        </div>
 
         <div class="divtesen">
             <div>
@@ -35,9 +34,6 @@
             <span id="valor-barra-felicidade">1,00</span>
         </div>
 
-        <div class="saldo-container">
-            <h2>Saldo: M$ <span id="saldo">0,00</span></h2>
-        </div>
         <div class="acoes-container">
             <h2>Ações:</h2>
             <div class="acoes">
@@ -53,13 +49,13 @@
             <h2>Transferências:</h2>
             <div class="transferencias">
                 <select class="input" id="usuarios-transferir">
-                    <option value="">Transferir para ...</option>
+                <option value="">Transferir para ...</option>
                 </select>
                 <input class="input" type="number" id="valor-transferir" placeholder="Valor a Transferir">
                 <button class="botao" onclick="transferirValor()">Transferir</button>
             </div>
 
-            <h2>Transações:</h2>
+            <h2> histórico Transações:</h2>
             <table id="transacoes-tabela">
                 <thead>
                     <tr>
@@ -74,5 +70,6 @@
         </div>
 
         <script src="script.js"></script>
+        <button class="botao" onclick="window.location=chamarLogs('logs.html')">Logs</button>
     </body>
 </html>
