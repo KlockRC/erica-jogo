@@ -16,10 +16,10 @@ services:
       MONGO_IP: database
 
   front-end:
-    image: noname120hz/api-front-end:1.1.0
+    image: noname120hz/api-front-end:1.2.0
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - back-end
 
