@@ -16,7 +16,7 @@ services:
       MONGO_IP: database
 
   front-end:
-    image: noname120hz/api-front-end:1.2.0
+    image: noname120hz/api-front-end:1.2.1
     restart: unless-stopped
     ports:
       - "80:80"
