@@ -345,6 +345,43 @@ async function callBack({ metodo, url, data }) {
     }
 }  
 
+function chamarLogs(path) {
+    const urlLogs = `${window.location.href}${path}`
+    return urlLogs
+}
+
+async function logs() {
+    const selectElement = document.getElementById('transacoes-tabela-logs');
+    const corpoTabela = selectElement.querySelector('tbody'); // Pega o elementos na tabela (tbody)
+    corpoTabela.innerHTML = ''; // Limpa as os elementos da tabela
+
+    const objetosBanco = await callBack({
+        metodo: "GET",
+        url: `${backUrl}/usuarios`
+    })
+
+    objetosBanco.forEach(usuario => {
+        const historicoTransacao = usuario.historicoTransacao;
+        historicoTransacao.forEach(transacao => {
+        const linha = document.createElement('tr'); // Create a new row
+
+        const data = document.createElement('td');
+        data.textContent = transacao.data; // Set data cell content
+        linha.appendChild(data);
+
+        const descricao = document.createElement('td');
+        descricao.textContent = `De "${usuario.nome}": ${transacao.descricao}`; // Set description cell content
+        linha.appendChild(descricao);
+
+        const valor = document.createElement('td');
+        valor.textContent = `M$ ${transacao.valor.toFixed(2)}`; // Format and set value cell content
+        linha.appendChild(valor);
+
+        corpoTabela.appendChild(linha); // Append the row to the table body
+        });
+    });
+}
+
 async function start() {
     await carregarMenuSuspenso();
     carregarBarraFelicidade();
