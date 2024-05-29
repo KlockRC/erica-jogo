@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 services:
   database:
@@ -6,17 +6,17 @@ services:
     restart: unless-stopped
 
   back-end:
-    image: noname120hz/api-back-end:1.1.0
+    image: noname120hz/api-back-end:1.1.0-port443
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "443:443"
     depends_on:
       - database
     environment:
       MONGO_IP: database
 
   front-end:
-    image: noname120hz/api-front-end:1.2.1
+    image: noname120hz/api-front-end:1.2.1-port443
     restart: unless-stopped
     ports:
       - "80:80"
